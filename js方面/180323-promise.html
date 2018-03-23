@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    /*异步promise专题*/
+    /**
+     * resolve 回调函数可以携带入参,在使用then接收回调的时候,可以获取入参。
+     * resolve 入参如果是一个promise对象的话,那么只有这个promise对象状态是reslove才能够获取回调。
+     */
+    var pro = new Promise((resolve,reject)=>{
+        //条件，执行resolve
+        resolve(12);
+        //否则reject
+    });
+
+    var pro2 = new Promise((resolve,reject)=>{
+       resolve(pro);
+    });
+
+    function test(){
+        return pro2;
+    }
+    test().then((res)=>{console.log(res+1);return pro2;}).then(res=>{console.log(res)});
+
+
+</script>
+</html>
