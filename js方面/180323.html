@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>异步回调</title>
+</head>
+<script src="https://unpkg.com/@reactivex/rxjs@5.0.0/dist/global/Rx.js"></script>
+<body>
+
+</body>
+<script>
+
+    /*1.回调函数*/
+    function firstEvent(callback){
+        setTimeout(callback,1000);
+    }
+    function cllbackFirst(){
+        console.log("我是回到函数一");
+    }
+    firstEvent(cllbackFirst);
+
+
+    /*2.事件监听即事件驱动型*/
+    function listenEvent(callback){
+    }
+
+    function callbackTwo() {
+        console.log("我是回调函数二");
+    }
+    listenEvent();
+
+
+    /*3.订阅*/
+    /**
+     *  rxjs是Observables的响应式编程的库,
+     * */
+
+
+
+
+
+    /*4.promise*/
+    /*promise回调的执行顺序在同步任务后,定时任务前*/
+    var v= 1;
+
+    function a(){
+        var x = new Promise(function(success,err){
+            if(v==2){
+                success();
+            }else{
+
+            }
+        });
+        return x;
+    }
+
+    function b(){
+        return new Promise(function(resolve,reject){
+            if(v==3){
+                resolve();
+            }
+        });
+    }
+
+    v=2;
+
+    a().then(function(){v=3;b();}).then(function(){
+        console.log('123');
+    });
+
+</script>
+</html>
