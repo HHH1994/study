@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片放大,缩小,旋转</title>
+    <style>
+        .contain{
+            overflow: hidden;
+            height: 500px;
+            width: 500px;
+        }
+    </style>
+</head>
+<body>
+    <p>图片放大缩小的原理主要是利用css3中transform的scale,rotate</p>
+    <div class="contain">
+        <img src="http://img3.redocn.com/tupian/20150106/aixinxiangkuang_3797284.jpg" id="pic" alt=""
+             style="z-index: 2;display: inline-block;object-fit:contain;height: 450px;width: 450px;">
+    </div>
+    <div style="z-index: 10;">
+        <button onclick="biggerPic('pic')">放大</button>
+        <button onclick="normalPic('pic')">缩小</button>
+        <button onclick="rotatePic('pic')">旋转</button>
+    </div>
+</body>
+<script>
+    /*获取角度*/
+    function getDegree(idName){
+        var el = document.getElementById(idName);
+        var st = window.getComputedStyle(el, null);
+        var tr = st.getPropertyValue("-webkit-transform") ||
+            st.getPropertyValue("-moz-transform") ||
+            st.getPropertyValue("-ms-transform") ||
+            st.getPropertyValue("-o-transform") ||
+            st.getPropertyValue("transform") ||
+            "FAIL";
+        if(tr=="none"){
+            return 0;
+        }
+        var values = tr.split('(')[1].split(')')[0].split(',');
+        var a = values[0];
+        var b = values[1];
+        var c = values[2];
+        var d = values[3];
+        var angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+        return angle;
+    }
+    
+    /*图片旋转*/
+    function rotatePic(idName){
+        var el = document.getElementById(idName);
+        let degree = Number(this.getDegree(idName));
+        let rotateStyle = el.style.transform;
+        if(rotateStyle.indexOf("rotate")!=-1){
+            let degIndex  =  rotateStyle.indexOf("deg");
+            let rotateString = rotateStyle.substring(rotateStyle.indexOf("rotate"),degIndex+5);
+            el.style.WebkitTransform = el.style.WebkitTransform.replace(rotateString,"rotate("+(degree+90)+"deg)");
+        }else {
+            el.style.WebkitTransform += " rotate("+(degree+90)+"deg)";
+        }
+    }
+    /*图片正常化*/
+    function normalPic(idName){
+        var el = document.getElementById(idName);
+        let transformStyle = el.style.transform;
+        if(transformStyle.indexOf("scale")!=-1){
+            let scaleIndex  =  transformStyle.indexOf("scale");
+            let scaleString = transformStyle.substring(transformStyle.indexOf("scale"),scaleIndex+10);
+            el.style.WebkitTransform = el.style.WebkitTransform.replace(scaleString,"scale(1)");
+        }else {
+            el.style.WebkitTransform += "  scale(1)";
+        }
+    }
+    /*图片放大*/
+    function biggerPic(idName){
+        var el = document.getElementById(idName);
+        let transformStyle = el.style.transform;
+        console.log(transformStyle);
+        if(transformStyle.indexOf("scale")!=-1){
+            let scaleIndex  =  transformStyle.indexOf("scale");
+            let scaleString = transformStyle.substring(transformStyle.indexOf("scale"),scaleIndex+8);
+            el.style.WebkitTransform = el.style.WebkitTransform.replace(scaleString,"scale(1.5)");
+        }else {
+            el.style.WebkitTransform += "  scale(1.5)";
+        }
+    }
+</script>
+</html>
