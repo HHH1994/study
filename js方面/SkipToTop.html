@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>置顶缓冲效果</title>
+    <style>
+        p{
+            font-size: 18px;
+        }
+        .btn{
+            display: none;
+            width: 60px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 16px;
+            background: #ffffff;
+            color: #000000;
+            border: 1px solid #d1d1d1;
+            border-radius: 8px;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            cursor: pointer;
+        }
+        .btn:hover{
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+<div class="btn" onclick="scrollToTop()">置顶</div>
+</body>
+<script>
+    var body = document.body;
+    for(var i = 0 ;i<160;i++){
+        var liDom  =document.createElement("li");
+        liDom.innerHTML = i;
+        body.appendChild(liDom);
+    }
+
+    window.onscroll = function(){
+        if(window.scrollY>0){
+            updateTopBtn("show")
+        }
+        else {
+            updateTopBtn("hide");
+        }
+    };
+
+    function updateTopBtn(status){
+        var btn = document.querySelector(".btn");
+        btn.style.display = status=="show"?"block":"none";
+    }
+
+    function scrollToTop(){
+        var h = window.scrollY;
+        var time = setTimeout(function () {
+            scrollToTop();
+        },0);
+        if(h>10){
+            window.scrollTo(0,h-10);
+        }
+        else if(0<h<10) {
+            window.scrollTo(0,0);
+            clearTimeout(time);
+        }
+
+    }
+
+</script>
+</html>
