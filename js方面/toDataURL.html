@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <input type="text" name="picUrl">
+    <button onclick="test()">测试</button>
+</body>
+<script>
+    function test(){
+        var url = document.getElementsByName("picUrl")[0].value;
+        var canvas = document.createElement("canvas");
+        var ctx = canvas.getContext('2d');
+        canvas.width = 100;
+        canvas.height = 100;
+        var img = new Image();
+        //设置图片跨域访问
+        img.crossOrigin = 'anonymous';
+        //加时间戳解决跨域问题
+        img.src = url+"?timeStamp="+new Date();
+        document.body.appendChild(img);
+        img.onload = function () {
+            ctx.drawImage(this,0,0,100,100);
+            var base64 = canvas.toDataURL('image/jpg', 1);
+            console.log(base64)
+        };
+    }
+</script>
+</html>
