@@ -26,8 +26,35 @@
     function test(){
         return pro2;
     }
-    test().then((res)=>{console.log(res+1);return pro2;}).then(res=>{console.log(res)});
+    //test().then((res)=>{console.log(res+1);return pro2;}).then(res=>{console.log(res)});
 
-
+    // es5实现promise
+    function MyPromise(fn){
+        this.resolveFn=function(){};
+        this.rejectFn = function(){};
+        fn(this.resolve,this.reject);
+    }
+    MyPromise.prototype.resolve = function(data){
+        var self = this;
+        setTimeout(function(){
+            self.resolveFn(data);
+        },0);
+    };
+    MyPromise.prototype.reject = function(data){
+        var self = this;
+        setTimeout(function(){
+            self.rejectFn(data);
+        },0);
+    };
+    MyPromise.prototype.then = function (res,rej) {
+        this.resolveFn = res;
+        this.rejectFn = rej;
+    };
+    var p = new MyPromise(function(res,rej){
+       res(2);
+    });
+    p.then(function(data){
+       console.log(data);
+    });
 </script>
 </html>
