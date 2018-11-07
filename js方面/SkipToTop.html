@@ -40,12 +40,14 @@
     }
 
     window.onscroll = function(){
-        if(window.scrollY>0){
+        console.log(window.pageYOffset );
+        updateTopBtn("show");
+        /*if(window.pageYOffset >0){
             updateTopBtn("show")
         }
         else {
             updateTopBtn("hide");
-        }
+        }*/
     };
 
     function updateTopBtn(status){
@@ -54,10 +56,20 @@
     }
 
     function scrollToTop(){
-        var h = window.scrollY;
+        var h = window.pageYOffset ;
         var time = setTimeout(function () {
             scrollToTop();
         },0);
+
+
+        if(h>20){
+
+        }
+        else if(0<h<30){
+
+        }
+
+        //
         if(h>10){
             window.scrollTo(0,h-10);
         }
