@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>全屏滚动</title>
+    <style>
+        body{
+            margin:0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .warp{
+            position: relative;
+            overflow: hidden;
+            top:0;
+            transition: top 0.5s;
+        }
+        .page img{
+            width: 100vw;
+        }
+    </style>
+</head>
+<body>
+<div class="warp"  style="overflow: hidden">
+    <div class="page-one page">
+        <img src="./image/11.png" alt="">
+    </div>
+    <div class="page-two page">
+        <img src="./image/22.png" alt="">
+    </div>
+</div>
+<script>
+    var p1 = document.querySelector(".page-one"),
+        warp = document.querySelector(".warp"),
+        p1H = p1.offsetHeight,
+        topV = -p1H+"px",
+        isFirst = true;
+    window.onresize = function () {
+        p1H = p1.offsetHeight;
+        topV=-p1H+"px";
+        if(!isFirst){
+            warp.style.top = topV;
+        }
+        console.log(p1H);
+    };
+
+    /* 全屏滚动 wheelDelta:负值向下,正值向上*/
+    document.body.addEventListener("mousewheel",function (e) {
+        if(e.wheelDelta<0){
+            if(warp.style.top == topV){
+                return;
+            }
+            warp.style.top = topV;
+            isFirst = false;
+        }
+        else {
+            warp.style.top = 0;
+            isFirst = true;
+        }
+    });
+</script>
+
+</body>
+</html>
