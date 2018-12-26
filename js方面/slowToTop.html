@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Title</title>
+    <style>
+        html,body{
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .content{
+            font-size: 20px;
+            width: 60%;
+            margin-left:-30%;
+            border:1px solid;
+            position: absolute;
+            left: 50%;
+            bottom: -1000px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="content">
+        <p>123123123</p>
+        <p>764376428</p>
+        <p>676874sj</p>
+        <p>123123123</p>
+        <p>764376428</p>
+        <p>676874sj</p>
+        <p>123123123</p>
+        <p>764376428</p>
+        <p>676874sj</p>
+        <p>123123123</p>
+        <p>764376428</p>
+        <p>676874sj</p><p>123123123</p>
+        <p>764376428</p>
+        <p>676874sj</p><p>123123123</p>
+        <p>764376428</p>
+        <p>676874sj</p><p>123123123</p>
+        <p>764376428</p>
+        <p>676874sj</p><p>123123123</p>
+        <p>764376428</p>
+        <p>676874sj</p>
+    </div>
+</body>
+<script>
+    var content= document.querySelector(".content");
+    var initY = 0,moveY;
+    var timeout;
+    content.addEventListener("touchstart",function(e){
+        initY = e.changedTouches[0].pageY;
+
+    });
+    content.addEventListener("touchmove",function(e){
+        moveY = e.targetTouches[0].pageY;
+        throlle(slid,15);
+
+    });
+
+    function throlle(fn,time){
+        clearTimeout(timeout);
+        timeout =  setTimeout(fn,time);
+
+    }
+
+    function slid() {
+        var direction = moveY-initY<0?"up":"down";
+        var bottom = getVal(getComputedStyle(content).bottom);
+        if(direction=="up"){
+            if(bottom<-20){
+                content.style.bottom = `${bottom + 10}px`;
+            }
+            else if(bottom<0&&bottom>-20){
+                content.style.bottom = 0;
+            }
+        }
+        else {
+            if(bottom<-1000){
+                content.style.bottom = -1000;
+            }
+            else{
+                content.style.bottom = `${bottom - 10}px`;
+            }
+        }
+    }
+    function getVal(val){
+        return Number(val.replace("px",""));
+    }
+</script>
+</html>
